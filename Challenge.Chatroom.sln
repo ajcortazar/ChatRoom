@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.28803.202
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Challenge.Chatroom", "Challenge.Chatroom\Challenge.Chatroom.csproj", "{BED0F4C6-6F3A-4F0C-A6DB-FA04C6EFA44B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BotApplication", "BotService\BotApplication.csproj", "{603B242B-4D48-49B7-A904-5E9C80895C0E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BotApplication", "BotApplication\BotApplication.csproj", "{603B242B-4D48-49B7-A904-5E9C80895C0E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
