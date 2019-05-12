@@ -1,0 +1,80 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="col-lg-7">
+        <div id="chat-container" style="border: 1px solid #ddd;background-color: white;height: 500px;overflow-y: auto;">
+            <ul id="posts" style="list-style: none;padding: 0;"></ul>
+        </div>
+    </div>
+    <div class="col-lg-5">
+        <div class="users" style="border: 1px solid #ddd;background-color: white;height: 500px;overflow-y: auto;">
+            <ul id="users" style="list-style: none;padding: 0;text-align: center;"></ul>
+        </div>
+    </div>
+    <br />
+
+    <div class="col-lg-7 mt-2">
+        <input class="form-control" id="message-box" placeholder="Escribe mensaje..." />
+    </div>
+    <div class="col-lg-2">
+        <input type="button" class="btn btn-primary" id="btnSend" value="Enviar" style="margin-top: 8px;" />
+    </div>
+</div>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/aspnet-signalr/signalr.min.js"></script>
+<script>
+    "use strict";
+
+    var connection = new signalR.HubConnectionBuilder().withUrl("/ChatRoomHub").build();
+
+    $(function () {
+
+    });
+
+    document.getElementById("message-box").addEventListener("keydown", function (e) {
+        if (e.which == "13" || e.key == "Enter" || e.keyCode == "13") {
+            sendMessage();
+        }
+    });
+
+    document.getElementById("btnSend").addEventListener("click", function () {
+        sendMessage();
+    });
+
+    connection.on("ReceivedMessage", function (posts) {
+        getMessages(posts);
+    });
+
+    connection.on("ConnectedUsers", function (users) {
+        var li = "";
+        for (var i = 0; i < users.length; i++) {
+            li += "<li>" + users[i].fullName + " connected at " + users[i].loginTime + "</li>";
+        }
+        document.getElementById("users").innerHTML = li;
+    });
+
+    connection.start().then(function (e) { }).catch(function (err) { return console.error(err.toString()); });
+
+    function getMessages(posts) {
+        var li = "";
+        for (var i = 0; i < posts.length; i++) {
+            li += "<li>" + posts[i].dateTime + " " + posts[i].message + "</li>";
+        }
+        document.getElementById("posts").innerHTML = li;
+        var height = $('#chat-container')[0].scrollHeight;
+        $('#chat-container').scrollTop(height);
+    }
+
+    function sendMessage() {
+        var message = document.getElementById("message-box").value;
+            connection.invoke("SendMessage", message).catch(function (err) {
+                return console.error(err.toString());
+            });
+            event.preventDefault();
+            document.getElementById("message-box").value = "";
+    }
+
+</script>

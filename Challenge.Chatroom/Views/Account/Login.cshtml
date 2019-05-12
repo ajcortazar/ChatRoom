@@ -1,0 +1,38 @@
+﻿
+@{
+    Layout = null;
+}
+
+@model Challenge.Chatroom.Db.Model.User
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>Iniciar Sesion</title>
+</head>
+<body>
+    
+    <div style="margin: 10% auto;width: 400px;padding: 20px;border: 1px solid #ddd;">
+        Iniciar Sesion<br /><br />
+        <form method="post" asp-controller="Account" asp-action="LoginUser">
+
+            <div>
+                <label asp-for="Identification">Usuario:</label>
+                <input asp-for="Identification" required />
+            </div>
+            <br />
+            <div>
+                <label asp-for="Password">Contraseña:</label>
+                <input asp-for="Password" required type="password" />
+            </div>
+            <br /><br />
+            <input type="submit" value="Login" />
+            <a href="/account/register">Register</a>
+
+        </form>
+
+    </div>
+
+</body>
+</html>
